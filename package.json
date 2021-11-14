@@ -1,0 +1,29 @@
+{
+  "name": "eris-js-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Uroxus/eris-js-template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Uroxus/eris-js-template/issues"
+  },
+  "homepage": "https://github.com/Uroxus/eris-js-template#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "dotenv": "^10.0.0",
+    "eris": "github:DonovanDMC/eris#everything",
+    "mongoose": "^5.13.7",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint-plugin-jsdoc": "^15.8.1"
+  }
+}
