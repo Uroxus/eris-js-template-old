@@ -6,6 +6,7 @@ import Eris, { Client } from "eris"
 
 /**
  * Class representing a bot instance
+ * @class
  * @extends Eris.Client
  */
 export default class botClient extends Client {

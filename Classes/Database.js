@@ -7,6 +7,7 @@ import { Logger } from "../Modules/Logger.js"
 
 /**
  * Define and manage a connection to a Mongo database
+ * @class
  */
 export default class Database {
     /**
