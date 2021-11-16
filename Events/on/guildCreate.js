@@ -2,10 +2,10 @@
  * @file Create a log every time the bot is added to a server
  */
 
-import Eris from "eris";
-import botClient from "../../Classes/Client";
-import { Logger } from "../../Modules/Logger";
-import { extractWebhookElements } from "../../Modules/Utilities";
+import Eris from "eris"
+import botClient from "../../Classes/Client"
+import { Logger } from "../../Modules/Logger"
+import { extractWebhookElements } from "../../Modules/Utilities"
 
 /**
  * @event guildCreate

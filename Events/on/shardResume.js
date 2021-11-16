@@ -2,9 +2,9 @@
  * @file Create a log every time a shard resumes
  */
 
-import botClient from "../../Classes/Client";
-import { Logger } from "../../Modules/Logger";
-import { extractWebhookElements } from "../../Modules/Utilities";
+import botClient from "../../Classes/Client"
+import { Logger } from "../../Modules/Logger"
+import { extractWebhookElements } from "../../Modules/Utilities"
 
 /**
  * @event shardResume
