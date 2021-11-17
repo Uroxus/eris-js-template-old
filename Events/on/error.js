@@ -2,8 +2,8 @@
  * @file Create a log every time a shard encounters an error
  */
 
-import botClient from "../../Classes/Client"
-import { Logger } from "../../Modules/Logger"
+import botClient from "../../Classes/Client.js"
+import { Logger } from "../../Modules/Logger.js"
 
 /**
  * @event error
