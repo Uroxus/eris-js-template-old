@@ -2,7 +2,7 @@
  * @file Define a structure for all commands available within the bot
  */
 
-import Eris, { Interaction } from "eris"
+import Eris, { CommandInteraction } from "eris"
 
 export class Command {
     /**
@@ -21,24 +21,30 @@ export class Command {
 
     /**
      * Process a received slash command 
-     * @param {Interaction} Interaction 
+     * @param {CommandInteraction} Interaction 
      * @param {*} interactionData 
      */
-    async chatInputCommand ( Interaction, interactionData ) { }
+    async chatInputCommand ( Interaction, interactionData ) {
+        Interaction.createMessage( `[Chat Input] Hello` )
+    }
 
     /**
      * Process a received user application command
-     * @param {Interaction} Interaction 
+     * @param {CommandInteraction} Interaction
      * @param {*} interactionData 
      */
-    async userAppCommand ( Interaction, interactionData ) { }
+    async userAppCommand ( Interaction, interactionData ) {
+        Interaction.createMessage( `[User App] Hello` )
+    }
 
     /**
      * Process a received message application command
-     * @param {Interaction} Interaction
+     * @param {CommandInteraction} Interaction
      * @param {*} interactionData
      */
-    async messageAppCommand ( Interaction, interactionData ) { }
+    async messageAppCommand ( Interaction, interactionData ) {
+        Interaction.createMessage( `[Message App] Hello` )
+    }
 
     /**
      * Process a received component (button, drop down) interaction

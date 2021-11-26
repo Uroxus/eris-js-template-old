@@ -14,9 +14,29 @@ import { Logger } from "../../Modules/Logger.js"
  */
 export default async function ( Client, Interaction ) {
     if ( Interaction.type === Constants.InteractionTypes.APPLICATION_COMMAND ) {
-        const interactionArgs = getApplicationCommandOptions( Interaction.data.options, { "COMMAND": Interaction.data.name, "RESOLVED": Interaction.data?.resolved } )
-    } else if ( Interaction.type === Constants.InteractionTypes.MESSAGE_COMPONENT ) {
+        const interactionArgs = getApplicationCommandOptions( Interaction.data.options, { "COMMAND": `${ Interaction.data.type }${ Interaction.data.name.toLowerCase() }`, "RESOLVED": Interaction.data?.resolved } )
+        const command = Client.commandManager.fetchCommand( `${ Interaction.data.type }${ Interaction.data.name.toLowerCase() }` )
 
+        if ( command ) {
+            switch ( Interaction.data.type ) {
+                case Constants.ApplicationCommandTypes.CHAT_INPUT:
+                    command.chatInputCommand( Interaction, interactionArgs )
+                    break
+                case Constants.ApplicationCommandTypes.USER:
+                    command.userAppCommand( Interaction, interactionArgs )
+                    break
+                case Constants.ApplicationCommandTypes.MESSAGE:
+                    command.messageAppCommand( Interaction, interactionArgs )
+                    break
+            }
+        }
+
+    } else if ( Interaction.type === Constants.InteractionTypes.MESSAGE_COMPONENT ) { // Buttons etc
+        const command = Client.commandManager.fetchCommand( Interaction.data.custom_id.split( "-" )[ 0 ] )
+
+        if ( command ) {
+            command.componentInteraction( Interaction )
+        }
     }
 }
 
