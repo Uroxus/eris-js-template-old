@@ -52,6 +52,5 @@ export const Logger = winston.createLogger( {
     levels,
     format,
     transports,
-    exceptionHandlers,
-    exitOnError: false
+    exceptionHandlers
 } )
