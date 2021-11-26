@@ -32,7 +32,6 @@ export default class CommandManager {
         this.applicationCommands = new Map()
 
         this.cacheCommands( `../Commands/` )
-        //TODO: Publish application commands somewhere
     }
 
     /**
