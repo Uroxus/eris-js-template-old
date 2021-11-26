@@ -25,6 +25,6 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "eslint-plugin-jsdoc": "^15.8.1"
+    "eslint-plugin-jsdoc": "^37.0.3"
   }
 }
