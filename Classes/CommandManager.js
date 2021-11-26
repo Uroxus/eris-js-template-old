@@ -88,6 +88,15 @@ export default class CommandManager {
     }
 
     /**
+     * Get the command file from the raw command collection, aliases or application command names
+     * @param {String} commandName 
+     * @returns {Object|undefined} The instantiated command object or undefined
+     */
+    fetchCommand ( commandName ) {
+        return this.commandFiles.get( commandName ) || this.commandFiles.get( this.aliases.get( commandName ) ) || this.commandFiles.get( this.applicationCommands.get( commandName ) ) || undefined
+    }
+
+    /**
      * Publish any application command updates to Discord
      */
     async publishCommands ( Client ) {
