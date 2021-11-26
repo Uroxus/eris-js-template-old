@@ -3,6 +3,8 @@
  */
 
 import Eris, { Client } from "eris"
+import { loadEvents } from "../Modules/Loader.js"
+import CommandManager from "./CommandManager.js"
 
 /**
  * Class representing a bot instance
@@ -18,6 +20,9 @@ export default class botClient extends Client {
     constructor( token, clientOptions ) {
         super( token, clientOptions )
 
+        this.commandManager = new CommandManager( this )
+
+        loadEvents( this )
         this.connect()
     }
 

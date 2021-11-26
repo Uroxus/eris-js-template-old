@@ -15,6 +15,13 @@ import { extractWebhookElements } from "../../Modules/Utilities.js"
 export default async function ( Client, shardId ) {
     Logger.status( `[SHARD] Shard ${ shardId } is ready` )
 
+    if ( shardId === 0 ) {
+        Logger.debug( `[COMMAND CACHE] Cached command list: ${ JSON.stringify( [ ...Client.commandManager.commandFiles.entries() ], null, 1 ) }` )
+        Logger.debug( `[COMMAND CACHE] Cached alias list: ${ JSON.stringify( [ ...Client.commandManager.aliases.entries() ], null, 1 ) }` )
+        Logger.debug( `[COMMAND CACHE] Cached application command name list: ${ JSON.stringify( [ ...Client.commandManager.applicationCommands.entries() ], null, 1 ) }` )
+        Client.commandManager.publishCommands( Client )
+    }
+
     if ( process.env.CONNECTIVITY_WEBHOOK && ( ( process.env.TESTING === "true" && process.env.CONNECTIVITY_WEBHOOK_ON_TESTING === 'true' ) || process.env.TESTING !== "true" ) ) {
         const [ id, token ] = extractWebhookElements( process.env.CONNECTIVITY_WEBHOOK )
         Client.executeWebhook( id, token, {
