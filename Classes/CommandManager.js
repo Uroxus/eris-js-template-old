@@ -38,7 +38,6 @@ export default class CommandManager {
      * Populate `this.commandFiles` with command callers and their files
      * @param {String} commandDir 
      */
-    //TODO: Standardize to lowercase strings
     async cacheCommands ( commandDir ) {
         const commandDirPath = fileURLToPath( `file://${ path.join( path.dirname( fileURLToPath( import.meta.url ) ), commandDir ) }` )
         const files = await fs.readdir( commandDirPath )
@@ -55,25 +54,33 @@ export default class CommandManager {
                 /** @type {Command} */
                 const targetFile = new CommandClass( this.Client )
 
-                if ( !this.commandFiles.has( targetFile.name ) ) {
-                    this.commandFiles.set( targetFile.name, targetFile )
+                if ( !this.commandFiles.has( targetFile.name.toLowerCase() ) ) {
+                    this.commandFiles.set( targetFile.name.toLowerCase(), targetFile )
                 } else {
-                    throw new Error( `Command manager attempted to cache commands with duplicate name ${ targetFile.name } ` )
+                    throw new Error( `Command manager attempted to cache commands with duplicate name ${ targetFile.name.toLowerCase() } ` )
                 }
 
+                // Create map of text aliases and their base command name
                 if ( targetFile.aliases && targetFile.aliases.length > 0 ) {
                     for ( const alias of targetFile.aliases ) {
-                        this.aliases.set( alias, targetFile.name )
+                        if ( !this.commandFiles.has( alias.toLowerCase() ) && !this.aliases.has( alias.toLowerCase() ) ) {
+                            this.aliases.set( alias.toLowerCase(), targetFile.name.toLowerCase() )
+                        } else {
+                            throw new Error( `Command manager attempted to cache a duplicate alias: ${ alias.toLowerCase() } ` )
+                        }
                     }
                 }
 
-                try {
+                // Create map of application command names and their base command name
+                if ( targetFile.applicationCommands && targetFile.applicationCommands.length > 0 ) {
                     for ( const applicationCommand of targetFile.applicationCommands ) {
-                        this.applicationCommands.set( `${ applicationCommand.type || 1 }${ applicationCommand.name }`, targetFile.name )
+                        if ( !this.applicationCommands.has( `${ applicationCommand.type || 1 }${ applicationCommand.name.toLowerCase() }` ) ) {
+                            this.applicationCommands.set( `${ applicationCommand.type || 1 }${ applicationCommand.name.toLowerCase() }`, targetFile.name.toLowerCase() )
+                        } else {
+                            throw new Error( `Command manager attempted to cache duplicate application command name: ${ applicationCommand.name.toLowerCase() }` )
+                        }
                     }
-                } finally {
-                    Logger.debug( `[COMMAND MANAGER] Cached ${ targetFile?.applicationCommands?.length } application commands from ${ targetFile.name }` )
-                    commandCount += 1
+                    Logger.debug( `[COMMAND MANAGER] Cached ${ targetFile.applicationCommands.length } application commands from ${ targetFile.name }` )
                 }
             }
         }
