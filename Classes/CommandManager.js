@@ -106,7 +106,9 @@ export default class CommandManager {
     async publishCommands ( Client ) {
         let applicationCommands = []
         for ( const [ commandName, commandFile ] of this.commandFiles.entries() ) {
-            applicationCommands.push( ...commandFile.applicationCommands )
+            if ( commandFile.applicationCommands ) {
+                applicationCommands.push( ...commandFile.applicationCommands )
+            }
         }
         Logger.debug( `[COMMAND PUBLISHER]: Extracted application command data list: ${ JSON.stringify( applicationCommands, null, 1 ) }` )
 
