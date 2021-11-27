@@ -3,6 +3,8 @@
  */
 
 import winston from "winston"
+import dotenv from "dotenv"
+dotenv.config()
 
 const levels = {
     error: 0,
