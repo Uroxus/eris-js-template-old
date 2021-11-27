@@ -32,7 +32,7 @@ export default class Eval extends Command {
 
             if ( typeof output !== "string" ) {
                 resultType = typeof output
-                output = inspect( output, { depth: 0 } )
+                output = inspect( output, { depth: 1 } )
             }
 
             const cleaned = clean( output )
