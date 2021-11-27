@@ -17,10 +17,10 @@ export default async function ( Client, Message ) {
     if ( Message.author.bot ) return
 
     if ( new RegExp( "^<@!*&*" + Client.user.id + "+>", 'i' ).test( Message.content ) ) { // Bot was pinged at the start of the message
-        Message.content = Message.content.substring( Message.content.indexOf( ">" ) + 1 ).trim().toLowerCase()
+        Message.content = Message.content.substring( Message.content.indexOf( ">" ) + 1 ).trim() // Remove @ping and whitespace
 
         if ( Message.content.length > 0 ) {
-            const attemptedCommand = Message.content.split( " " ).filter( Boolean )[ 0 ]
+            const attemptedCommand = Message.content.split( " " ).filter( Boolean )[ 0 ].toLowerCase()
 
             /** @type {Command} */
             const command = Client.commandManager.fetchCommand( attemptedCommand )
