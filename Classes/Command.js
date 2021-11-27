@@ -100,7 +100,8 @@ export class Command {
 
     /**
      * Process a text channel message command
+     * @param {botClient} Client
      * @param {Message} Message
      */
-    async textCommand ( Message ) { }
+    async textCommand ( Client, Message ) { }
 }
