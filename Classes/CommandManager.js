@@ -7,6 +7,7 @@ import { promises as fs } from "fs"
 import path from "path"
 import { Logger } from "../Modules/Logger.js"
 import { fileURLToPath } from "url"
+import botClient from "./Client.js"
 
 export default class CommandManager {
     constructor( Client ) {
@@ -98,6 +99,7 @@ export default class CommandManager {
 
     /**
      * Publish any application command updates to Discord
+     * @param {botClient} Client
      */
     async publishCommands ( Client ) {
         let applicationCommands = []
