@@ -51,6 +51,7 @@ export default class CommandManager {
                 await this.cacheCommands( `${ commandDir }\\${ commandFile }` )
             } else if ( commandFile.endsWith( ".js" ) ) {
                 const { default: CommandClass } = await import( `file://${ commandPath }` )
+                commandCount += 1
 
                 /** @type {Command} */
                 const targetFile = new CommandClass( this.Client )
