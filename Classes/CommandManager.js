@@ -91,10 +91,11 @@ export default class CommandManager {
     /**
      * Get the command file from the raw command collection, aliases or application command names
      * @param {String} commandName 
+     * @param {Boolean} [expectedApplicationCommand=false] If true will search only the application command cache, otherwise search base command names and aliases
      * @returns {Object|undefined} The instantiated command object or undefined
      */
-    fetchCommand ( commandName ) {
-        return this.commandFiles.get( commandName ) || this.commandFiles.get( this.aliases.get( commandName ) ) || this.commandFiles.get( this.applicationCommands.get( commandName ) ) || undefined
+    fetchCommand ( commandName, expectedApplicationCommand = false ) {
+        return ( expectedApplicationCommand ? this.commandFiles.get( this.applicationCommands.get( commandName ) ) : this.commandFiles.get( commandName ) || this.commandFiles.get( this.aliases.get( commandName ) ) ) ?? undefined
     }
 
     /**

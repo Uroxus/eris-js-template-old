@@ -15,7 +15,7 @@ import { Logger } from "../../Modules/Logger.js"
 export default async function ( Client, Interaction ) {
     if ( Interaction.type === Constants.InteractionTypes.APPLICATION_COMMAND ) {
         const interactionArgs = getApplicationCommandOptions( Interaction.data.options, { "COMMAND": `${ Interaction.data.type }${ Interaction.data.name.toLowerCase() }`, "RESOLVED": Interaction.data?.resolved } )
-        const command = Client.commandManager.fetchCommand( `${ Interaction.data.type }${ Interaction.data.name.toLowerCase() }` )
+        const command = Client.commandManager.fetchCommand( `${ Interaction.data.type }${ Interaction.data.name.toLowerCase() }`, true )
 
         if ( command ) {
             switch ( Interaction.data.type ) {
