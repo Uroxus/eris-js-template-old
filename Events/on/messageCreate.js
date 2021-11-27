@@ -4,7 +4,7 @@
 
 import { Constants, Message } from "eris"
 import botClient from "../../Classes/Client.js"
-import { Logger } from "../../Modules/Logger.js"
+import { Command } from "../../Classes/Command.js"
 
 /**
  * @event messageCreate
@@ -21,33 +21,41 @@ export default async function ( Client, Message ) {
 
         if ( Message.content.length > 0 ) {
             const attemptedCommand = Message.content.split( " " ).filter( Boolean )[ 0 ]
+
+            /** @type {Command} */
             const command = Client.commandManager.fetchCommand( attemptedCommand )
 
             if ( command ) {
-                //TODO: Check client permissions
-                if ( command.isDevOnly && Message.author.id !== process.env.DEV_ID ) return
-
-                command.textCommand( Message )
+                if ( command.checkClientPermissions( Client, Message ) ) {
+                    const userPerms = command.checkUserPermissions( Message )
+                    if ( userPerms ) {
+                        command.textCommand( Message )
+                    } else if ( userPerms?.error ) {
+                        Message.channel.createMessage( { "messageReference": Message.id, "content": userPerms.error } )
+                    }
+                }
             }
         } else {
-            Client.createMessage( Message.channel.id, {
-                "embeds": [
-                    {
-                        "author": {
-                            "name": Client.user.username,
-                            "icon_url": Client.user.dynamicAvatarURL()
-                        },
-                        "thumbnail": {
-                            "url": Client.user.dynamicAvatarURL()
-                        },
-                        "description": "Hello 👋",
-                        "color": parseInt( process.env.EMBED_DEFAULT )
+            if ( Message.channel.permissionsOf( Client.user.id ).has( 'sendMessages' ) ) {
+                Message.channel.createMessage( {
+                    "embeds": [
+                        {
+                            "author": {
+                                "name": Client.user.username,
+                                "icon_url": Client.user.dynamicAvatarURL()
+                            },
+                            "thumbnail": {
+                                "url": Client.user.dynamicAvatarURL()
+                            },
+                            "description": "Hello 👋",
+                            "color": parseInt( process.env.EMBED_DEFAULT )
+                        }
+                    ],
+                    "messageReference": {
+                        "messageID": Message.id
                     }
-                ],
-                "messageReference": {
-                    "messageID": Message.id
-                }
-            } )
+                } )
+            }
         }
     }
 }
