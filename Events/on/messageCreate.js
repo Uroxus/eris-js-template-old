@@ -29,7 +29,8 @@ export default async function ( Client, Message ) {
                 if ( command.checkClientPermissions( Client, Message ) ) {
                     const userPerms = command.checkUserPermissions( Message )
                     if ( userPerms ) {
-                        command.textCommand( Message )
+                        Message.content = Message.content.split( " " ).slice( 1 ).join( " " )
+                        command.textCommand( Client, Message )
                     } else if ( userPerms?.error ) {
                         Message.channel.createMessage( { "messageReference": Message.id, "content": userPerms.error } )
                     }
