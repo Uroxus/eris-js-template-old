@@ -4,6 +4,7 @@
 
 import Eris, { Client } from "eris"
 import { loadEvents } from "../Modules/Loader.js"
+import { Logger } from "../Modules/Logger.js"
 import CommandManager from "./CommandManager.js"
 
 /**
@@ -23,6 +24,7 @@ export default class botClient extends Client {
         this.commandManager = new CommandManager( this )
 
         loadEvents( this )
+        Logger.status( `[MODE] ${ process.env.TESTING === "true" ? 'development' : 'production' }` )
         this.connect()
     }
 
