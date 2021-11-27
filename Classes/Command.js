@@ -36,7 +36,7 @@ export class Command {
     checkUserPermissions ( Message ) {
         if ( !this.isDevOnly && !this.userPermissions ) return true // No use restriction
         if ( Message.author.id === process.env.DEV_ID ) return true // Dev can do anything
-        if ( this.isDevOnly && !Message.author.id === process.env.DEV_ID ) return false // Prevent randoms using dev command
+        if ( this.isDevOnly && !( Message.author.id === process.env.DEV_ID ) ) return false // Prevent randoms using dev command
 
         if ( this.userPermissions ) {
             const missingPerms = this.userPermissions.filter( ( permission ) => {
