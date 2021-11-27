@@ -2,7 +2,7 @@
  * @file Define a structure for all commands available within the bot
  */
 
-import Eris, { CommandInteraction } from "eris"
+import Eris, { CommandInteraction, Message } from "eris"
 
 export class Command {
     /**
@@ -51,4 +51,10 @@ export class Command {
      * @param {Interaction} Interaction 
      */
     async componentInteraction ( Interaction ) { }
+
+    /**
+     * Process a text channel message command
+     * @param {Message} Message
+     */
+    async textCommand ( Message ) { }
 }
