@@ -16,7 +16,7 @@ export default async function ( Client, shardId ) {
     Logger.status( `[SHARD] Shard ${ shardId } is ready` )
 
     if ( shardId === 0 ) {
-        Logger.debug( `[COMMAND CACHE] Cached command list: ${ JSON.stringify( [ ...Client.commandManager.commandFiles.entries() ], null, 1 ) }` )
+        Logger.debug( `[COMMAND CACHE] Cached command list: ${ JSON.stringify( [ ...Client.commandManager.commandFiles.keys() ], null, 1 ) }` )
         Logger.debug( `[COMMAND CACHE] Cached alias list: ${ JSON.stringify( [ ...Client.commandManager.aliases.entries() ], null, 1 ) }` )
         Logger.debug( `[COMMAND CACHE] Cached application command name list: ${ JSON.stringify( [ ...Client.commandManager.applicationCommands.entries() ], null, 1 ) }` )
         Client.commandManager.publishCommands( Client )
