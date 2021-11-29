@@ -2,7 +2,7 @@
  * @file Define a class instance of a MongoDB connection
  */
 
-import { Mongoose } from "mongoose"
+import mongoose from "mongoose"
 import { Logger } from "../Modules/Logger.js"
 
 /**
@@ -22,7 +22,7 @@ export default class Database {
 
     async connect () {
         return new Promise( ( resolve, reject ) => {
-            Mongoose.connect( this.connectString, {
+            mongoose.connect( this.connectString, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
                 useFindAndModify: true,
@@ -32,10 +32,10 @@ export default class Database {
                 return reject( error )
             } )
 
-            Mongoose.connection.on( "open", () => Logger.status( `[DATABASE] Connection established` ) )
-            Mongoose.connection.on( "close", () => Logger.status( `[DATABASE] Connection closed` ) )
-            Mongoose.connection.on( "reconnected", () => Logger.status( `[DATABASE] Connection resumed` ) )
-            Mongoose.connection.on( "error", ( error ) => Logger.error( `[DATABASE] Encountered an error: ${ error }` ) )
+            mongoose.connection.on( "open", () => Logger.status( `[DATABASE] Connection established` ) )
+            mongoose.connection.on( "close", () => Logger.status( `[DATABASE] Connection closed` ) )
+            mongoose.connection.on( "reconnected", () => Logger.status( `[DATABASE] Connection resumed` ) )
+            mongoose.connection.on( "error", ( error ) => Logger.error( `[DATABASE] Encountered an error: ${ error }` ) )
 
             return resolve( this )
         } )
