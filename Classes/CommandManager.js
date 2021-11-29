@@ -5,8 +5,8 @@
 import { Command } from "./Command.js"
 import { promises as fs } from "fs"
 import path from "path"
-import { Logger } from "../Modules/Logger.js"
 import { fileURLToPath } from "url"
+import { Logger } from "../Modules/Logger.js"
 import botClient from "./Client.js"
 
 export default class CommandManager {
@@ -36,6 +36,55 @@ export default class CommandManager {
     }
 
     /**
+     * Create a map entry in `this.commandFiles` of commandFile.name.toLowerCase() -> Command
+     * @private
+     * @param {Command} commandFile 
+     */
+    _cacheBaseCommand ( commandFile ) {
+        if ( !this.commandFiles.has( commandFile.name.toLowerCase() ) ) {
+            this.commandFiles.set( commandFile.name.toLowerCase(), commandFile )
+        } else {
+            throw new Error( `[COMMAND MANAGER] Attempted to cache command with a duplicate name ${ commandFile.name.toLowerCase() }` )
+        }
+    }
+
+    /**
+     * Create a map entry in `this.aliases` of [command alias].toLowerCase() -> commandFile.name.toLowerCase()
+     * @private
+     * @param {Command} commandFile 
+     */
+    _cacheAliases ( commandFile ) {
+        if ( commandFile?.aliases?.length > 0 ) {
+            for ( const alias of commandFile.aliases ) {
+                if ( !this.commandFiles.has( alias.toLowerCase() ) && !this.aliases.has( alias.toLowerCase() ) ) {
+                    this.aliases.set( alias.toLowerCase(), commandFile.name.toLowerCase() )
+                } else {
+                    throw new Error( `[COMMAND MANAGER] Attempted to cache alias which already exists ${ alias }` )
+                }
+            }
+            Logger.debug( `[COMMAND MANAGER] [ALIASES] Cached ${ commandFile.aliases.length } aliases for ${ commandFile.name }` )
+        }
+    }
+
+    /**
+     * Create a map entry in `this.applicationCommands` of [application command type][application command name.toLowerCase()] ->  commandFile.name.toLowerCase()
+     * @private
+     * @param {Command} commandFile 
+     */
+    _cacheApplicationCommand ( commandFile ) {
+        if ( commandFile?.applicationCommands?.length > 0 ) {
+            for ( const applicationCommand of commandFile.applicationCommands ) {
+                if ( !this.applicationCommands.has( `${ applicationCommand.type || 1 }${ applicationCommand.name.toLowerCase() } ` ) ) {
+                    this.applicationCommands.set( `${ applicationCommand.type || 1 }${ applicationCommand.name.toLowerCase() }`, commandFile.name.toLowerCase() )
+                } else {
+                    throw new Error( `[COMMAND MANAGER] Attempted to cache application command with same name & type: ${ applicationCommand.type || 1 }${ applicationCommand.name.toLowerCase() }` )
+                }
+            }
+            Logger.debug( `[COMMAND MANAGER] [APPLICATION COMMANDS] Cached ${ commandFile.applicationCommands.length } commands from ${ commandFile.name }` )
+        }
+    }
+
+    /**
      * Populate `this.commandFiles` with command callers and their files
      * @param {String} commandDir 
      */
@@ -48,7 +97,8 @@ export default class CommandManager {
             const commandPath = path.join( commandDirPath, commandFile )
 
             if ( ( await fs.lstat( commandPath ) ).isDirectory() && !commandFile.startsWith( "." ) ) {
-                await this.cacheCommands( `${ commandDir }\\${ commandFile }` )
+                await this.cacheCommands( `${ commandDir }\\${ commandFile } ` )
+
             } else if ( commandFile.endsWith( ".js" ) ) {
                 const { default: CommandClass } = await import( `file://${ commandPath }` )
                 commandCount += 1
@@ -56,37 +106,12 @@ export default class CommandManager {
                 /** @type {Command} */
                 const targetFile = new CommandClass( this.Client )
 
-                if ( !this.commandFiles.has( targetFile.name.toLowerCase() ) ) {
-                    this.commandFiles.set( targetFile.name.toLowerCase(), targetFile )
-                } else {
-                    throw new Error( `Command manager attempted to cache commands with duplicate name ${ targetFile.name.toLowerCase() } ` )
-                }
-
-                // Create map of text aliases and their base command name
-                if ( targetFile.aliases && targetFile.aliases.length > 0 ) {
-                    for ( const alias of targetFile.aliases ) {
-                        if ( !this.commandFiles.has( alias.toLowerCase() ) && !this.aliases.has( alias.toLowerCase() ) ) {
-                            this.aliases.set( alias.toLowerCase(), targetFile.name.toLowerCase() )
-                        } else {
-                            throw new Error( `Command manager attempted to cache a duplicate alias: ${ alias.toLowerCase() } ` )
-                        }
-                    }
-                }
-
-                // Create map of application command names and their base command name
-                if ( targetFile.applicationCommands && targetFile.applicationCommands.length > 0 ) {
-                    for ( const applicationCommand of targetFile.applicationCommands ) {
-                        if ( !this.applicationCommands.has( `${ applicationCommand.type || 1 }${ applicationCommand.name.toLowerCase() }` ) ) {
-                            this.applicationCommands.set( `${ applicationCommand.type || 1 }${ applicationCommand.name.toLowerCase() }`, targetFile.name.toLowerCase() )
-                        } else {
-                            throw new Error( `Command manager attempted to cache duplicate application command name: ${ applicationCommand.name.toLowerCase() }` )
-                        }
-                    }
-                    Logger.debug( `[COMMAND MANAGER] Cached ${ targetFile.applicationCommands.length } application commands from ${ targetFile.name }` )
-                }
+                this._cacheBaseCommand( targetFile )
+                this._cacheAliases( targetFile )
+                this._cacheApplicationCommand( targetFile )
             }
         }
-        Logger.status( `[COMMAND MANAGER] Loaded ${ commandCount }/${ files.filter( file => file.endsWith( ".js" ) ).length } commands from ${ commandDir }` )
+        Logger.status( `[COMMAND MANAGER] Loaded ${ commandCount } /${ files.filter( file => file.endsWith( ".js" ) ).length } commands from ${ commandDir }` )
     }
 
     /**
