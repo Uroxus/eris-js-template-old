@@ -4,12 +4,11 @@
 
 import { Command } from '../../Classes/Command.js'
 import { inspect } from 'util'
-import botClient from '../../Classes/Client.js'
 import { ComponentInteraction } from 'eris'
 
 export default class Eval extends Command {
-    constructor() {
-        super( {
+    constructor( Client ) {
+        super( Client, {
             "name": "eval",
             "aliases": [ "e" ],
             "isDevOnly": true
@@ -17,10 +16,9 @@ export default class Eval extends Command {
     }
 
     /**
-     * @param {botClient} Client
      * @param {Message} Message
      */
-    async textCommand ( Client, Message ) {
+    async textCommand ( Message ) {
         if ( !Message.content.toLowerCase().includes( "token" ) ) {
             let output, resultType
 
@@ -59,7 +57,7 @@ export default class Eval extends Command {
                                 "value": `\`\`\`js\n${ resultType || typeof output }\`\`\``
                             },
                         ],
-                        "footer": { "text": `${ Client.getUserString( Client.user ) }`, "icon_url": Client.user.dynamicAvatarURL() },
+                        "footer": { "text": `${ this.Client.getUserString( this.Client.user ) }`, "icon_url": this.Client.user.dynamicAvatarURL() },
                         "timestamp": new Date()
                     }
                 ],

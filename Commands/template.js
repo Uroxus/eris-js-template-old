@@ -6,8 +6,8 @@ import { Command } from "../Classes/Command.js"
 import { Constants, Message } from "eris"
 
 export default class TemplateCommand extends Command {
-    constructor() {
-        super( {
+    constructor( Client ) {
+        super( Client, {
             "name": "template",
             "aliases": [ "tmplt" ],
             "applicationCommands": [ {

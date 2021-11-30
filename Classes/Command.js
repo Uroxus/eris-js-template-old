@@ -8,6 +8,7 @@ import botClient from "./Client.js"
 export class Command {
     /**
      * Define a new command
+     * @param {botClient} Client
      * @param {Object} config 
      * @param {String} config.name The base name of the command
      * @param {Array<String>=} config.aliases Alternative text-channel inputs to trigger the command
@@ -16,7 +17,8 @@ export class Command {
      * @param {Array<Eris.Constants.Permissions>=} config.clientPermissions
      * @param {Array<Eris.Constants.Permissions>=} config.userPermissions
      */
-    constructor( config ) {
+    constructor( Client, config ) {
+        this.Client = Client
         this.name = config.name
         this.aliases = config.aliases
 
@@ -57,9 +59,9 @@ export class Command {
      * @param {Message} Message 
      * @returns {Boolean} Whether or not the bot client has sufficient channel permissions to respond properly
      */
-    checkClientPermissions ( Client, Message ) {
+    checkClientPermissions ( Message ) {
         const missingPerms = this.clientPermissions.filter( ( permission ) => {
-            return !Message.channel.permissionsOf( Client.user.id ).has( permission )
+            return !Message.channel.permissionsOf( this.Client.user.id ).has( permission )
         } )
 
         return !( missingPerms.length > 0 )
@@ -100,8 +102,7 @@ export class Command {
 
     /**
      * Process a text channel message command
-     * @param {botClient} Client
      * @param {Message} Message
      */
-    async textCommand ( Client, Message ) { }
+    async textCommand ( Message ) { }
 }
