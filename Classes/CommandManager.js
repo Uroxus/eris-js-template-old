@@ -111,7 +111,7 @@ export default class CommandManager {
                 this._cacheApplicationCommand( targetFile )
             }
         }
-        Logger.status( `[COMMAND MANAGER] Loaded ${ commandCount } /${ files.filter( file => file.endsWith( ".js" ) ).length } commands from ${ commandDir }` )
+        Logger.status( `[COMMAND MANAGER] Loaded ${ commandCount }/${ files.filter( file => file.endsWith( ".js" ) ).length } commands from ${ commandDir }` )
     }
 
     /**
@@ -137,11 +137,15 @@ export default class CommandManager {
         }
         Logger.debug( `[COMMAND PUBLISHER]: Extracted application command data list: ${ JSON.stringify( applicationCommands, null, 1 ) }` )
 
-        //TODO: Compare cached application command array to the list of existing published commands and make individual changes (or not at all) otherwise there will be client errors while the command cache refreshes
+        //TODO: Does it need to check for changes and only update commands that have been changed to prevent overwrites & use issues while Discord updates the cache
         if ( process.env.TESTING === "true" ) {
-            await Client.bulkEditGuildCommands( process.env.TESTING_SERVER, applicationCommands ).catch( ( error ) => Logger.error( `[COMMAND MANAGER] Failed to bulk publish guild application commands: ${ error }` ) )
+            await Client.bulkEditGuildCommands( process.env.TESTING_SERVER, applicationCommands )
+                .catch( ( error ) => Logger.error( `[COMMAND MANAGER] Failed to bulk publish guild application commands: ${ error }` ) )
+                .then( ( result ) => Logger.status( `[COMMAND MANAGER] [GUILDS] Published ${ result.length } application commands to the testing server` ) )
         } else {
-            await Client.bulkEditCommands( applicationCommands ).catch( ( error ) => Logger.error( `[COMMAND MANAGER] Failed to publish application commands: ${ error }` ) )
+            await Client.bulkEditCommands( applicationCommands )
+                .catch( ( error ) => Logger.error( `[COMMAND MANAGER] Failed to publish application commands: ${ error }` ) )
+                .then( ( result ) => Logger.status( `[COMMAND MANAGER] [GLOBAL] Published ${ result.length } application commands` ) )
         }
     }
 }
