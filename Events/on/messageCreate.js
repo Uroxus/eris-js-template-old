@@ -32,7 +32,14 @@ export default async function ( Client, Message ) {
                         Message.content = Message.content.split( " " ).slice( 1 ).join( " " )
                         command.textCommand( Client, Message )
                     } else if ( userPerms?.error ) {
-                        Message.channel.createMessage( { "messageReference": Message.id, "content": userPerms.error } )
+                        Message.channel.createMessage( {
+                            "messageReference": {
+                                "messageID": Message.id
+                            },
+                            "content": userPerms.error
+                        } ).catch( ( error ) => {
+                            Logger.error( `[TEXT RESPONSE] Failed to inform ${ Message.author.id } about required permissions for their used command: ${ error } ` )
+                        } )
                     }
                 }
             }
@@ -55,6 +62,8 @@ export default async function ( Client, Message ) {
                     "messageReference": {
                         "messageID": Message.id
                     }
+                } ).catch( ( error ) => {
+                    Logger.error( `[PING RESPONSE] Failed to respond to ${ Message.author.id }\'s ping: ${ error } ` )
                 } )
             }
         }
