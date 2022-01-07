@@ -10,13 +10,15 @@ const levels = {
     error: 0,
     warn: 1,
     status: 2,
-    debug: 3
+    apiFail: 3,
+    debug: 4
 }
 
 winston.addColors( {
     error: "red bold underline",
     warn: "yellow",
     status: "white",
+    apiFail: "yellow italic",
     debug: "blue"
 } )
 
