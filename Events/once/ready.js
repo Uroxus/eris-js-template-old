@@ -2,7 +2,6 @@
  * @file Create a log the first time all shards turn ready
  */
 
-import botClient from "../../Classes/Client.js"
 import { Logger } from "../../Modules/Logger.js"
 
 /**
