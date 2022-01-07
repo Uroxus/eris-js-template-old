@@ -39,7 +39,7 @@ export default async function ( Client, Guild ) {
                 }
             ]
         } ).catch( ( error ) => {
-            Logger.warn( `[GUILDS] Failed to post guild join status: ${ error }` )
+            Logger.apiFail( `[GUILDS] Failed to post guild join status: ${ error }` )
         } )
     }
 }

@@ -38,7 +38,7 @@ export default async function ( Client, Message ) {
                             },
                             "content": userPerms.error
                         } ).catch( ( error ) => {
-                            Logger.error( `[TEXT RESPONSE] Failed to inform ${ Message.author.id } about required permissions for their used command: ${ error } ` )
+                            Logger.apiFail( `[TEXT RESPONSE] Failed to inform ${ Message.author.id } about required permissions for their used command: ${ error } ` )
                         } )
                     }
                 }
@@ -63,7 +63,7 @@ export default async function ( Client, Message ) {
                         "messageID": Message.id
                     }
                 } ).catch( ( error ) => {
-                    Logger.error( `[PING RESPONSE] Failed to respond to ${ Message.author.id }\'s ping: ${ error } ` )
+                    Logger.apiFail( `[PING RESPONSE] Failed to respond to ${ Message.author.id }\'s ping: ${ error } ` )
                 } )
             }
         }

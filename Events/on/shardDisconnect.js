@@ -29,7 +29,7 @@ export default async function ( Client, Error, shardId ) {
                 }
             ]
         } ).catch( ( error ) => {
-            Logger.warn( `[SHARD] Shard ${ shardId } failed to post disconnect status: ${ error }` )
+            Logger.apiFail( `[SHARD] Shard ${ shardId } failed to post disconnect status: ${ error }` )
         } )
     }
 }

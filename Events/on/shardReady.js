@@ -35,7 +35,7 @@ export default async function ( Client, shardId ) {
                 }
             ]
         } ).catch( ( error ) => {
-            Logger.warn( `[SHARD] Shard ${ shardId } failed to post a ready status: ${ error }` )
+            Logger.apiFail( `[SHARD] Shard ${ shardId } failed to post a ready status: ${ error }` )
         } )
     }
 }

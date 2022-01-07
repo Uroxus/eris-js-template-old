@@ -28,7 +28,7 @@ export default async function ( Client, shardId ) {
                 }
             ]
         } ).catch( ( error ) => {
-            Logger.warn( `[SHARD] Shard ${ shardId } failed to post a resume status: ${ error }` )
+            Logger.apiFail( `[SHARD] Shard ${ shardId } failed to post a resume status: ${ error }` )
         } )
     }
 }
