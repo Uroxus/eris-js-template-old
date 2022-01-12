@@ -8,7 +8,7 @@ import { Logger } from "../../Modules/Logger.js"
 
 /**
  * @event interactionCreate
- * @link 
+ * @link https://abal.moe/Eris/docs/0.16.1/Client#event-interactionCreate
  * @param {botClient} Client
  * @param {Eris.CommandInteraction|Eris.ComponentInteraction} Interaction
  */
