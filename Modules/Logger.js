@@ -1,3 +1,7 @@
+/**
+ * @file Supports project-wide, organised information, error and status logging
+ */
+
 import winston from "winston"
 import dotenv from "dotenv"
 dotenv.config()
