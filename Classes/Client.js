@@ -2,8 +2,9 @@
  * @file Client defines the running bot instance
  */
 
-import Eris, { Client, User } from "eris"
+import Eris, { Client } from "eris"
 import { Logger } from "../Modules/Logger.js"
+import { EventManager } from "../Managers/EventManager.js"
 
 import Debug from "debug"
 const debug = Debug( "client" )
@@ -22,6 +23,9 @@ export class BotClient extends Client {
     constructor( token, options ) {
         super( token, options )
         Logger.notice( `[MODE] ${ process.env.TESTING === "true" ? 'development' : 'production' }` )
+
+        this.EventManager = new EventManager( this )
+
         this.connect().then( () => debug( 'connected' ) ).catch( ( error ) => debug( `connection failed... ${ error }` ) )
     }
 }
