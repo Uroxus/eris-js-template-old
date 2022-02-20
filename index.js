@@ -1,6 +1,14 @@
 /**
  * @file index starts the bot instance
  */
+import Debug from "debug"
+const defualtArgFormat = Debug.formatArgs
+
+Debug.formatArgs = function ( args ) {
+    this.namespace = this.namespace.padEnd( 36, "." )
+    defualtArgFormat.call( this, args )
+}
+
 
 import { BotClient } from "./Classes/Client.js"
 
