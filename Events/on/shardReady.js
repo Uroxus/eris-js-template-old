@@ -1,5 +1,6 @@
 import { BotClient } from "../../Classes/Client.js"
 import { Event } from "../../Classes/Event.js"
+import { extractWebhookValues } from "../../Modules/Utilities.js"
 
 /**
  * @class
