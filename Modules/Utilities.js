@@ -3,7 +3,7 @@
  */
 
 /**
- * 
+ * From a Discord API webhook link, extract the ID and token
  * @param {String} webhook Webhook URL string
  * @returns {[id: String, token: String]} [id, token]
  * @example https://discord.com/api/webhooks/xxxxxxxxxxx/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy

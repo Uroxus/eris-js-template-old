@@ -3,6 +3,7 @@
  */
 import Debug from "debug"
 import { Logger } from "../Modules/Logger.js"
+import { BotClient } from "../../Classes/Client.js"
 
 /**
  * Event wrapper
@@ -24,6 +25,10 @@ export class Event {
         this.logger = Logger
     }
 
+    /**
+     * @param {BotClient} BotClient 
+     * @param  {...any} params 
+     */
     async invoke ( BotClient, ...params ) {
         this.debug( `received event with params: ${ params.join( ", " ) }` )
     }

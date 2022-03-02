@@ -18,7 +18,7 @@ export class EventManager {
     }
 
     /**
-     * 
+     * Import and initialise events from the /Events directory
      * @param {BotClient} BotClient 
      * @param {String} EventDirectory Relative path to the event directory to be read to find event files
      */
