@@ -1,7 +1,8 @@
 import { BotClient } from "../../Classes/Client.js"
 import { Event } from "../../Classes/Event.js"
 import { EmbedColours } from "../../Constants/Message.js"
-import { Guild } from "eris"
+import Eris, { Guild } from "eris"
+import { extractWebhookValues } from "../../Modules/Utilities.js"
 
 /**
  * @class
@@ -26,11 +27,12 @@ export default class GuildCreate extends Event {
             const [ id, token ] = extractWebhookValues( process.env.GUILDS_WEBHOOK )
 
             BotClient.executeWebhook( id, token, {
+                /** @type {[Eris.EmbedOptions]} */
                 "embeds": [
                     {
                         "title": `**Joined** ${ Guild.name }`,
                         "description": `*${ Guild.id }*`,
-                        "color": parseInt( EmbedColours.green ),
+                        "color": EmbedColours.green,
                         "timestamp": new Date(),
                         "fields": [
                             {
