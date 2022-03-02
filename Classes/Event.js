@@ -3,7 +3,7 @@
  */
 import Debug from "debug"
 import { Logger } from "../Modules/Logger.js"
-import { BotClient } from "../../Classes/Client.js"
+import { BotClient } from "../Classes/Client.js"
 
 /**
  * Event wrapper
