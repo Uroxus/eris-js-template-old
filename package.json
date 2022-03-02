@@ -26,6 +26,7 @@
     "debug": "^4.3.3",
     "dotenv": "^16.0.0",
     "eris": "^0.16.1",
+    "moment": "^2.29.1",
     "mongoose": "^6.2.2",
     "supports-color": "^9.2.1",
     "winston": "^3.6.0"
