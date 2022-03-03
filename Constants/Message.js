@@ -1,4 +1,4 @@
-export const EmbedColours = {
+module.exports.EmbedColours = {
     "green": parseInt( 0x43B581 ),
     "orange": parseInt( 0xF09E47 ),
     "red": parseInt( 0xF04947 ),

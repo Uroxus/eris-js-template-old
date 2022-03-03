@@ -1,19 +1,18 @@
-import { BotClient } from "../../Classes/Client.js"
-import { Event } from "../../Classes/Event.js"
+const { Event } = require( "../../Classes/Event.js" )
 
 /**
  * @class
  * @event error
  * @link https://abal.moe/Eris/docs/Client#event-error
  */
-export default class Error extends Event {
+module.exports = class Error extends Event {
     constructor() {
         super( 'error' )
     }
 
     /**
      * Called every time the bot receives an event of this type
-     * @param {BotClient} BotClient 
+     * @param {import("../Classes/Client.js").BotClient} BotClient 
      * @param {Error} Error
      * @param {Number} shardId
      */

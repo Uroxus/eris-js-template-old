@@ -2,7 +2,7 @@
  * @file Exports useful functions to use throughout the project
  */
 
-import { User } from "eris"
+const { User } = require( "eris" )
 
 /**
  * From a Discord API webhook link, extract the ID and token
@@ -10,7 +10,7 @@ import { User } from "eris"
  * @returns {[id: String, token: String]} [id, token]
  * @example https://discord.com/api/webhooks/xxxxxxxxxxx/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
  */
-export function extractWebhookValues ( webhook ) {
+module.exports.extractWebhookValues = ( webhook ) => {
     const values = webhook.split( "/" )
     return [ values.at( -2 ), values.at( -1 ) ]
 }
@@ -21,6 +21,6 @@ export function extractWebhookValues ( webhook ) {
  * @returns {String} name#discrim
  * @example Uroxoos#0420
  */
-export function getUserString ( User ) {
+module.exports.getUserString = ( User ) => {
     return `${ User.username }#${ User.discriminator }`
 }

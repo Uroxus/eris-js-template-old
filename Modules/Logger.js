@@ -2,9 +2,8 @@
  * @file Supports project-wide, organised information, error and status logging
  */
 
-import winston from "winston"
-import dotenv from "dotenv"
-dotenv.config()
+const winston = require( "winston" )
+require( "dotenv" ).config()
 
 const jsonFormat = winston.format.combine( winston.format.timestamp( { format: 'HH:mm:ss DD-MM-YY' } ), winston.format.json() )
 
@@ -19,7 +18,7 @@ const jsonFormat = winston.format.combine( winston.format.timestamp( { format: '
  * @method {notice} 
  * @method {info} Logging a status or some useful information
  */
-export const Logger = winston.createLogger( {
+module.exports.Logger = winston.createLogger( {
     level: process.env.TESTING === "true" ? "debug" : "warning",
     levels: winston.config.syslog.levels,
 

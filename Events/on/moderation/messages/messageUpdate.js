@@ -1,10 +1,8 @@
-import { BotClient } from "../../../../Classes/Client.js"
-import { Event } from "../../../../Classes/Event.js"
-import { EmbedColours } from "../../../../Constants/Message.js"
-import Eris, { Message, Constants } from "eris"
-import { getUserString } from "../../../../Modules/Utilities.js"
-import { extractWebhookValues } from "../../../../Modules/Utilities.js"
-
+const { Event } = require( "../../../Classes/Event.js" )
+const { EmbedColours } = require( "../../../Constants/Message.js" )
+const { Message, Constants, EmbedOptions } = require( "eris" )
+const { extractWebhookValues } = require( "../../../Modules/Utilities.js" )
+const { getUserString } = require( "../../../../Modules/Utilities.js" )
 /**
  * @class
  * @event messageUpdate
@@ -17,7 +15,7 @@ export default class MessageUpdate extends Event {
 
     /**
      * Called every time the bot receives an event of this type
-     * @param {BotClient} BotClient 
+     * @param {import("../Classes/Client.js").BotClient} BotClient 
      * @param {Message} Message 
      * @param {Object?} oldMessage 
      */
@@ -33,7 +31,7 @@ export default class MessageUpdate extends Event {
             const [ id, token ] = extractWebhookValues( process.env.MODLOGS_WEBHOOK )
 
             BotClient.executeWebhook( id, token, {
-                /** @type {[Eris.EmbedOptions]} */
+                /** @type {[EmbedOptions]} */
                 "embeds": [
                     {
                         "author": {

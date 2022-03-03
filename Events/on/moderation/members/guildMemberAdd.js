@@ -1,9 +1,8 @@
-import { BotClient } from "../../../../Classes/Client.js"
-import { Event } from "../../../../Classes/Event.js"
-import { EmbedColours } from "../../../../Constants/Message.js"
-import Eris, { Guild, Member } from "eris"
-import { getUserString } from "../../../../Modules/Utilities.js"
-import { extractWebhookValues } from "../../../../Modules/Utilities.js"
+const { Event } = require( "../../../Classes/Event.js" )
+const { EmbedColours } = require( "../../../Constants/Message.js" )
+const { Guild, Member, EmbedOptions } = require( "eris" )
+const { extractWebhookValues } = require( "../../../Modules/Utilities.js" )
+const { getUserString } = require( "../../../../Modules/Utilities.js" )
 
 /**
  * @class
@@ -20,7 +19,7 @@ export default class GuildMemberAdd extends Event {
 
     /**
      * Called every time the bot receives an event of this type
-     * @param {BotClient} BotClient 
+     * @param {import("../Classes/Client.js").BotClient} BotClient 
      * @param {Guild} Guild 
      * @param {Member} Member 
      */
@@ -31,7 +30,7 @@ export default class GuildMemberAdd extends Event {
             const [ id, token ] = extractWebhookValues( process.env.MODLOGS_WEBHOOK )
 
             BotClient.executeWebhook( id, token, {
-                /** @type {[Eris.EmbedOptions]} */
+                /** @type {[EmbedOptions]} */
                 "embeds": [
                     {
                         "author": {

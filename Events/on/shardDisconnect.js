@@ -1,20 +1,19 @@
-import { BotClient } from "../../Classes/Client.js"
-import { Event } from "../../Classes/Event.js"
-import { extractWebhookValues } from "../../Modules/Utilities.js"
+const { Event } = require( "../../Classes/Event.js" )
+const { extractWebhookValues } = require( "../../Modules/Utilities.js" )
 
 /**
  * @class
  * @event shardDisconnect
  * @link https://abal.moe/Eris/docs/Client#event-shardDisconnect
  */
-export default class ShardDisconnect extends Event {
+module.exports = class ShardDisconnect extends Event {
     constructor() {
         super( 'shardDisconnect' )
     }
 
     /**
      * Called every time the bot receives an event of this type
-     * @param {BotClient} BotClient 
+     * @param {import("../Classes/Client.js").BotClient} BotClient 
      * @param {Error=} Error
      * @param {Number} shardId
      */
@@ -26,10 +25,12 @@ export default class ShardDisconnect extends Event {
             const [ id, token ] = extractWebhookValues( process.env.CONNECTIVITY_WEBHOOK )
 
             BotClient.executeWebhook( id, token, {
-                "content": `🔴 **Shard ${ shardId }** | Disconnected ${ Error ? `\n\`${ Error }\`` : '' }`
+                "content": `🔴 **Shard ${ shardId }** | Disconnected${ Error ? `: \`${ Error }\`` : '' }`
             } ).catch( ( error ) => {
                 this.logger.alert( `[SHARD DISCONNECT] Failed to log disconnect of shard ${ shardId }... ${ error }` )
             } )
+
+            BotClient.EventManager.reload()
         }
     }
 }

@@ -1,15 +1,13 @@
 /**
  * @file Template for Client events
  */
-import Debug from "debug"
-import { Logger } from "../Modules/Logger.js"
-import { BotClient } from "../Classes/Client.js"
+const { Logger } = require( "../Modules/Logger.js" )
 
 /**
  * Event wrapper
  * @class
  */
-export class Event {
+module.exports.Event = class {
     /**
      * Used to wrap each client event for the EventManager
      * @param {String} eventName 
@@ -19,14 +17,14 @@ export class Event {
         this.name = name
         this.once = once
 
-        this.debug = Debug( `client:event:${ once ? 'once' : 'on' }:${ name }` )
+        this.debug = require( "debug" )( `client:event:${ once ? 'once' : 'on' }:${ name }` )
         this.debug( 'loaded' )
 
         this.logger = Logger
     }
 
     /**
-     * @param {BotClient} BotClient 
+     * @param {import("../Classes/Client.js").BotClient} BotClient 
      * @param  {...any} params 
      */
     async invoke ( BotClient, ...params ) {

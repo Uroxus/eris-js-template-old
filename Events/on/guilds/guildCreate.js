@@ -1,8 +1,7 @@
-import { BotClient } from "../../Classes/Client.js"
-import { Event } from "../../Classes/Event.js"
-import { EmbedColours } from "../../Constants/Message.js"
-import Eris, { Guild } from "eris"
-import { extractWebhookValues } from "../../Modules/Utilities.js"
+const { Event } = require( "../../../Classes/Event.js" )
+const { EmbedColours } = require( "../../../Constants/Message.js" )
+const { Guild, EmbedOptions } = require( "eris" )
+const { extractWebhookValues } = require( "../../../Modules/Utilities.js" )
 
 /**
  * @class
@@ -16,7 +15,7 @@ export default class GuildCreate extends Event {
 
     /**
      * Called every time the bot receives an event of this type
-     * @param {BotClient} BotClient 
+     * @param {import("../Classes/Client.js").BotClient} BotClient 
      * @param {Guild} Guild
      */
     async invoke ( BotClient, Guild ) {
@@ -27,7 +26,7 @@ export default class GuildCreate extends Event {
             const [ id, token ] = extractWebhookValues( process.env.GUILDS_WEBHOOK )
 
             BotClient.executeWebhook( id, token, {
-                /** @type {[Eris.EmbedOptions]} */
+                /** @type {[EmbedOptions]} */
                 "embeds": [
                     {
                         "title": `**Joined** ${ Guild.name }`,

@@ -1,20 +1,19 @@
-import { BotClient } from "../../Classes/Client.js"
-import { Event } from "../../Classes/Event.js"
-import { extractWebhookValues } from "../../Modules/Utilities.js"
+const { Event } = require( "../../Classes/Event.js" )
+const { extractWebhookValues } = require( "../../Modules/Utilities.js" )
 
 /**
  * @class
  * @event shardResume
  * @link https://abal.moe/Eris/docs/Client#event-shardResume
  */
-export default class ShardResume extends Event {
+module.exports = class ShardResume extends Event {
     constructor() {
         super( 'shardResume' )
     }
 
     /**
      * Called every time the bot receives an event of this type
-     * @param {BotClient} BotClient 
+     * @param {import("../Classes/Client.js").BotClient} BotClient 
      * @param {Number} shardId
      */
     async invoke ( BotClient, shardId ) {

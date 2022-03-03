@@ -1,7 +1,7 @@
 /**
  * @file index starts the bot instance
  */
-import Debug from "debug"
+const Debug = require( "debug" )
 const defualtArgFormat = Debug.formatArgs
 
 Debug.formatArgs = function ( args ) {
@@ -10,11 +10,7 @@ Debug.formatArgs = function ( args ) {
 }
 
 
-import { BotClient } from "./Classes/Client.js"
+const { BotClient } = require( "./Classes/Client.js" )
+const { ClientOptions } = require( "./Constants/Client.js" )
 
-new BotClient( ( process.env.TESTING === "true" ? process.env.DEV_TOKEN : process.env.PROD_TOKEN ), {
-    "defaultImageFormat": "png",
-    "restMode": true,
-    "maxShards": "auto",
-    "intents": [ "guilds", "guildMessages", "guildIntegrations", "directMessages" ]
-} )
+new BotClient( ( process.env.TESTING === "true" ? process.env.DEV_TOKEN : process.env.PROD_TOKEN ), ClientOptions )
