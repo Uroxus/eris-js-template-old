@@ -1,0 +1,30 @@
+{
+  "type": "module",
+  "dependencies": {
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.0",
+    "eris-fleet": "^1.0.1"
+  },
+  "name": "eris-js-template",
+  "version": "3.0.0",
+  "description": "Discord bot template for Node JS using eris-fleet",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Uroxus/eris-js-template.git"
+  },
+  "keywords": [
+    "eris",
+    "eris-fleet"
+  ],
+  "author": "Uro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Uroxus/eris-js-template/issues"
+  },
+  "homepage": "https://github.com/Uroxus/eris-js-template#readme"
+}
