@@ -3,7 +3,9 @@
   "dependencies": {
     "debug": "^4.3.4",
     "dotenv": "^16.0.0",
-    "eris-fleet": "^1.0.1"
+    "eris": "^0.16.1",
+    "eris-fleet": "^1.0.1",
+    "winston": "^3.6.0"
   },
   "name": "eris-js-template",
   "version": "3.0.0",
