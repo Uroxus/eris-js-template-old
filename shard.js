@@ -8,7 +8,7 @@ import { EventManager } from "./Managers/EventManager.js"
  * The bot instance that runs for each cluster
  * @class
  */
-export class BotWorker extends BaseClusterWorker {
+export class Shard extends BaseClusterWorker {
     constructor( setup ) {
         super( setup )
 

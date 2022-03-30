@@ -7,8 +7,8 @@ import { Fleet } from "eris-fleet"
 import dotenv from "dotenv"
 dotenv.config()
 
-import { BotWorker as Shard } from "./bot.js"
-import { inspect } from "util"
+import { Shard } from "./shard.js"
+import winston from "winston"
 
 const Admiral = new Fleet( {
     BotWorker: Shard,
@@ -82,12 +82,40 @@ const Admiral = new Fleet( {
 
 if ( isMaster ) {
     const logger = winston.createLogger( {
+        levels: {
+            error: 0,
+            warn: 1,
+            info: 2,
+            main: 3,
+            debug: 4
+        },
+        transports: [
+            new winston.transports.Console( { format: winston.format.colorize( { all: true } ), stderrLevels: [ "error", "warn" ] } ),
+            new winston.transports.File( { filename: "logs/error.log", level: "error" } ),
+            new winston.transports.File( { filename: "logs/main.log" } )
+        ],
+        level: process.env.DEBUG ? "debug" : "main",
+        format: winston.format.combine(
+            winston.format.timestamp( { format: "DD-MM-YY HH:mm:ss" } ),
+            winston.format.printf( ( info ) => {
+                const { timestamp, level, message, ...args } = info
 
+                return `[${ timestamp }] [${ level.toUpperCase() }] | ${ message } ${ Object.keys( args ).length ? JSON.stringify( args, null, 2 ) : "" }`
+            } )
+        ),
     } )
 
+    winston.addColors( {
+        error: "red",
+        warn: "yellow",
+        info: "green",
+        main: "magenta",
+        debug: "cyan"
+    } )
 
-    Admiral.on( 'log', msg => console.log( msg ) )
-    Admiral.on( 'debug', msg => console.debug( msg ) )
-    Admiral.on( 'warn', msg => console.warn( msg ) )
-    Admiral.on( 'error', msg => console.error( inspect( msg ) ) )
+    Admiral.on( 'error', ( msg ) => logger.error( msg ) )
+    Admiral.on( 'warn', ( msg ) => logger.warn( msg ) )
+    Admiral.on( 'info', ( msg ) => logger.info( msg ) )
+    Admiral.on( 'log', ( msg ) => logger.main( msg ) )
+    Admiral.on( 'debug', ( msg ) => logger.main( msg ) )
 }
