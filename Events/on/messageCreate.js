@@ -22,7 +22,6 @@ export default class MessageCreate extends Event {
      */
     async invoke ( BotWorker, Message ) {
         if ( Message.author.bot ) return
-
-        Message.channel.createMessage( 'i hope this changes' )
+        Message.channel.createMessage( 'I hope this changes' )
     }
 }

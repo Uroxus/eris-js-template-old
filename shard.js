@@ -12,6 +12,6 @@ export class Shard extends BaseClusterWorker {
     constructor( setup ) {
         super( setup )
 
-        this.EventManager = new EventManager( this )
+        this.EventManager = new EventManager( this.bot )
     }
 }
